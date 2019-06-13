@@ -1,0 +1,8 @@
+reloadTemplates: true
+apiBaseURL: /api
+database:
+ username: dart
+ password: dart
+ host: localhost
+ port: 5433
+ databaseName: dart_test

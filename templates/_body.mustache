@@ -1,0 +1,10 @@
+<ul>
+    {{#contents}}
+        {{#isText}}
+            <li>{{> text }}</li>
+        {{/isText}}
+        {{#isImage}}
+            <li>{{> image }}</li>
+        {{/isImage}}
+    {{/contents}}
+</ul>

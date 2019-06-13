@@ -3,6 +3,7 @@ import 'package:aqueduct_server/model/content.dart';
 
 import 'harness/app.dart';
 import 'harness/app.dart' as prefix0;
+
 Future main() async {
   final harness = Harness()
     ..install();
@@ -56,20 +57,13 @@ Future main() async {
   test("Get only pages which are 'published'", () async {
     final response = await harness.agent.get("/");
     expectResponse(response, 200);
-    expect(response, hasResponse(200, body: partial({
-      "title": "Homepage",
-      "slug": "homepage",
-      "pageStatus": "published"
-    })));
+    expect(response, prefix0.hasResponse(200, body: contains("Homepage")));
+
   });
 
   test("Fetch published page by id", () async {
     final response = await harness.agent.get("/page2");
-    expect(response, hasResponse(200, body: partial({
-      "title": "Page2 in published",
-      "slug": "page2",
-      "pageStatus": "published"
-    })));
+    expect(response, prefix0.hasResponse(200, body: contains("Page2 in published")));
   });
 
   test("Fetch review page by id should not be found", () async {

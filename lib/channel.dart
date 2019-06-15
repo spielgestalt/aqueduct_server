@@ -1,10 +1,11 @@
 import 'aqueduct_server.dart';
 import 'controller/admin/admin_content_controller.dart';
-import 'controller/admin/admin_page_controller.dart';
 import 'controller/identity_controller.dart';
 import 'controller/page_controller.dart';
 import 'controller/register_controller.dart';
 import 'controller/user_controller.dart';
+import 'model/content.dart';
+import 'model/page.dart';
 import 'model/user.dart';
 import 'utility/html_template.dart';
 
@@ -77,12 +78,18 @@ class AqueductServerChannel extends ApplicationChannel
     router
         .route("/admin/pages/[:id]")
         .link(() => Authorizer.bearer(authServer))
-        .link(() => AdminPageController(context, authServer));
+        .link(() => ManagedObjectController<Page>(context));
+
 
     router
         .route("/admin/pages/:pageId/contents/[:id]")
         .link(() => Authorizer.bearer(authServer))
         .link(() => AdminContentController(context, authServer));
+
+    router
+      .route("/admin/contents/[:id]")
+      .link(() => Authorizer.bearer(authServer))
+      .link(() => ManagedObjectController<Content>(context));
 
     router
         .route("files/*")

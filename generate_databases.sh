@@ -6,4 +6,3 @@ aqueduct db upgrade --connect=postgres://dart:dart@localhost:5432/dart_developme
 aqueduct auth add-client --id de.spielgestalt.therealworld.mobile \
     --secret @3uikdMkx \
     --connect=postgres://dart:dart@localhost:5432/dart_development
-    

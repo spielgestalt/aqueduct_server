@@ -6,6 +6,7 @@ import '../harness/app.dart';
 Future main() async {
   Agent agent;
   int pageId;
+  int contentId;
   final harness = Harness()
     ..install();
 
@@ -30,6 +31,7 @@ Future main() async {
       ..values.contentData = documentData;
     final content = await contentQuery.insert();
     assert(content.page.id == page.id);
+    contentId = content.id;
     pageId = page.id;
 
   });
@@ -40,5 +42,20 @@ Future main() async {
     final List<Map<String, dynamic>> responsePages = await response.body.decode();
     expect(responsePages.length, 1);
 
+  });
+
+  test("fetch all contents", () async {
+    final response = await agent.get("/admin/contents");
+    expectResponse(response, 200);
+    final List<Map<String, dynamic>> responsePages = await response.body.decode();
+    expect(responsePages.length, 1);
+  });
+
+  test("fetch content by id", () async {
+    final response = await agent.get("/admin/contents/$contentId");
+    expectResponse(response, 200);
+    expect(response, hasResponse(200, body: partial({
+      "id": 1, "position": 1, "contentType": "text"
+    })));
   });
 }
